@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+#gameCanvas {
+  /* OBS ブラウザソースでは幅1080×高さ1920のまま使う。
+     ブラウザ開発時は CSS transform でウィンドウに合わせてスケールする。*/
+  display: block;
+  image-rendering: pixelated;
+}

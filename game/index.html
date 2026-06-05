@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080">
+  <title>Comment Quest</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- ピクセルフォント（Google Fonts CDN） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    /*
+      開発用スケール: canvas.style.width/height で表示サイズだけ縮小。
+      描画解像度(canvas.width/height)は 1080x1920 のままなので高品質を維持。
+      OBS ブラウザソースでは幅1080・高さ1920 を指定し、この style タグは不要。
+    */
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas"></canvas>
+
+  <!-- 読み込み順序: 依存関係の順に並べる。?v= はキャッシュ対策（編集時にバンプ） -->
+  <script src="events.js?v=3"></script>
+  <script src="state.js?v=9"></script>
+  <script src="assets.js?v=9"></script>
+  <script src="hero.js?v=8"></script>
+  <script src="enemy.js?v=3"></script>
+  <script src="render.js?v=15"></script>
+  <script src="ws.js?v=2"></script>
+  <script src="audio.js?v=3"></script>
+  <script src="main.js?v=4"></script>
+
+  <script>
+    // 開発用: ウィンドウサイズに合わせて Canvas の表示サイズを変更
+    // canvas.width/height(描画解像度)は変えず、CSS width/height だけ縮小する
+    // OBS ブラウザソースでは幅1080・高さ1920 を指定するためこのスケール処理は不要
+    function fitCanvas() {
+      const canvas = document.getElementById("gameCanvas");
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      // 極端に狭いビューポート（プレビューパネル等）は高さ基準でスケール
+      const scale = vw > 10
+        ? Math.min(vw / 1080, vh / 1920)
+        : Math.min(vh / 1920, 0.45);
+      canvas.style.width  = `${Math.round(1080 * scale)}px`;
+      canvas.style.height = `${Math.round(1920 * scale)}px`;
+    }
+    window.addEventListener("resize", fitCanvas);
+    window.addEventListener("load", fitCanvas);
+  </script>
+</body>
+</html>
