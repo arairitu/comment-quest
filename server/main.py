@@ -188,8 +188,11 @@ async def tiktok_loop(username: str):
     while True:
         client = build_tiktok_client(username)
         try:
-            # start() はコルーチン。完了＝切断。  ★要確認: 版により connect()
-            await client.start()
+            # start() は接続をスケジュールして Task を返すだけ（即座に戻る）。
+            # 返ってきた Task を await して「切断されるまで」ブロックする。
+            # （TikTokLive 6.x で検証済み。古い版で start が無ければ connect を使う）
+            task = await client.start()
+            await task
         except Exception as e:
             print(f"❌ TikTok接続エラー: {e}")
         # ここに来たら切断/失敗。少し待って再接続。
